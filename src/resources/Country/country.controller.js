@@ -26,7 +26,7 @@ module.exports.addCountry = async (req, res) => {
 
 module.exports.removeCountry = async (req, res) => {
   try {
-    const doc = await Country.findOneAndRemove({ _id: req.body.id });
+    const doc = await Country.findOneAndRemove({ _id: req.body._id });
     if (!doc) {
       return res.status(400).end();
     }
@@ -37,9 +37,13 @@ module.exports.removeCountry = async (req, res) => {
 };
 module.exports.updateCountry = async (req, res) => {
   try {
-    const doc = await Country.findOneAndUpdate({ _id: req.body.id }, req.body, {
-      new: true,
-    });
+    const doc = await Country.findOneAndUpdate(
+      { _id: req.body._id },
+      req.body,
+      {
+        new: true,
+      }
+    );
     if (!doc) {
       return res.status(400).end();
     }

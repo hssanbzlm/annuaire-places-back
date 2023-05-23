@@ -25,7 +25,7 @@ module.exports.addCategorie = async (req, res) => {
 module.exports.updateCategorie = async (req, res) => {
   try {
     const doc = await Category.findOneAndUpdate(
-      { _id: req.body.id },
+      { _id: req.body._id },
       { ...req.body },
       { new: true }
     );
@@ -39,7 +39,7 @@ module.exports.updateCategorie = async (req, res) => {
 };
 module.exports.removeCategorie = async (req, res) => {
   try {
-    const doc = await Category.findOneAndRemove({ _id: req.body.id });
+    const doc = await Category.findOneAndRemove({ _id: req.body._id });
     if (!doc) {
       return res.status(400).end();
     }

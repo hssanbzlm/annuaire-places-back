@@ -20,7 +20,7 @@ module.exports.addCountry = async (req, res) => {
     }
     res.status(200).send({ data: doc });
   } catch (e) {
-    res.status(400).end;
+    res.status(400).end();
   }
 };
 
@@ -32,7 +32,7 @@ module.exports.removeCountry = async (req, res) => {
     }
     res.status(200).send({ data: doc });
   } catch (e) {
-    res.status(400).end;
+    res.status(400).end();
   }
 };
 module.exports.updateCountry = async (req, res) => {
@@ -47,8 +47,8 @@ module.exports.updateCountry = async (req, res) => {
     if (!doc) {
       return res.status(400).end();
     }
-    res.status(200).end();
+    res.status(200).send({ data: doc });
   } catch (e) {
-    res.status(400).end;
+    res.status(400).end();
   }
 };

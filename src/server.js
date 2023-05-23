@@ -1,5 +1,6 @@
 const express = require("express");
 const { json, urlencoded } = require("body-parser");
+const cors = require("cors");
 const { connect } = require("./utils/db");
 const { envConfig } = require("./config/dev");
 const countryRouter = require("./resources/Country/country.router");
@@ -8,6 +9,7 @@ const categoryRouter = require("./resources/Category/category.router");
 const app = express();
 app.use(urlencoded({ extended: true }));
 app.use(json());
+app.use(cors());
 app.use("/api/country", countryRouter);
 app.use("/api/place", placeRouter);
 app.use("/api/category", categoryRouter);

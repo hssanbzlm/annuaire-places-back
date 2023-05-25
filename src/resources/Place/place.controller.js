@@ -1,8 +1,13 @@
 const Place = require("./place.model");
-
+const { findCountryId, findCategoryId } = require("../../utils/helpers");
 module.exports.placesList = async (req, res) => {
   try {
-    const docs = await Place.find();
+    const docs = await Place.find()
+      .populate([
+        { path: "country", select: "name" },
+        { path: "category", select: "name" },
+      ])
+      .exec();
     if (!docs) {
       return res.status(400).end();
     }
@@ -14,7 +19,13 @@ module.exports.placesList = async (req, res) => {
 
 module.exports.addPlace = async (req, res) => {
   try {
-    const doc = await Place.create({ ...req.body });
+    const countryId = await findCountryId(req.body.country);
+    const categoryId = await findCategoryId(req.body.category);
+    const doc = await Place.create({
+      ...req.body,
+      country: countryId,
+      category: categoryId,
+    });
     if (!doc) {
       return res.status(400).end();
     }
@@ -26,7 +37,7 @@ module.exports.addPlace = async (req, res) => {
 
 module.exports.removePlace = async (req, res) => {
   try {
-    const doc = await Place.findOneAndRemove({ _id: req.body.id });
+    const doc = await Place.findOneAndRemove({ _id: req.body._id });
     if (!doc) {
       return res.status(400).end();
     }
@@ -38,15 +49,20 @@ module.exports.removePlace = async (req, res) => {
 
 module.exports.updatePlace = async (req, res) => {
   try {
-    const doc = await Place.findOneAndUpdate(
-      { _id: req.body.id },
-      { ...req.body },
-      { new: true }
-    );
-    if (!doc) {
-      return res.status(400).end();
+    const countryId = await findCountryId(req.body.country);
+    const categoryId = await findCategoryId(req.body.category);
+
+    if (countryId && categoryId) {
+      const doc = await Place.findOneAndUpdate(
+        { _id: req.body._id },
+        { ...req.body, country: countryId, category: categoryId },
+        { new: true }
+      );
+      if (doc) {
+        return res.status(200).send({ data: doc });
+      }
     }
-    res.status(200).send({ data: doc });
+    res.status(400).send({ data: "error" });
   } catch (e) {
     res.status(400).end();
   }

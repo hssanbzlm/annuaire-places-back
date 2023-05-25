@@ -22,6 +22,15 @@ const placeShema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "country",
   },
+  category: {
+    required: true,
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "category",
+  },
+  city: {
+    required: true,
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("place", placeShema);

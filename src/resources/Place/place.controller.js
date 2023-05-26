@@ -21,15 +21,27 @@ module.exports.addPlace = async (req, res) => {
   try {
     const countryId = await findCountryId(req.body.country);
     const categoryId = await findCategoryId(req.body.category);
-    const doc = await Place.create({
-      ...req.body,
-      country: countryId,
-      category: categoryId,
-    });
-    if (!doc) {
-      return res.status(400).end();
+    const date = new Date();
+    if (countryId && categoryId) {
+      const doc = await Place.create({
+        ...req.body,
+        country: countryId,
+        category: categoryId,
+        dateAdded: date,
+      });
+      if (doc) {
+        const updatedDoc = await Place.findById(doc._id)
+          .populate([
+            { path: "country", select: "name" },
+            { path: "category", select: "name" },
+          ])
+          .exec();
+        return res.status(200).send({
+          data: updatedDoc,
+        });
+      }
     }
-    res.status(200).send({ data: doc });
+    res.status(400).send({ data: "error" });
   } catch (e) {
     res.status(400).end();
   }
@@ -59,7 +71,15 @@ module.exports.updatePlace = async (req, res) => {
         { new: true }
       );
       if (doc) {
-        return res.status(200).send({ data: doc });
+        const updatedDoc = await Place.findById(doc._id)
+          .populate([
+            { path: "country", select: "name" },
+            { path: "category", select: "name" },
+          ])
+          .exec();
+        return res.status(200).send({
+          data: updatedDoc,
+        });
       }
     }
     res.status(400).send({ data: "error" });

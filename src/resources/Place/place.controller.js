@@ -37,12 +37,13 @@ module.exports.addPlace = async (req, res) => {
           ])
           .exec();
         return res.status(200).send({
-          data: updatedDoc,
+          data: addeddDoc,
         });
       }
     }
     res.status(400).send({ data: "error" });
   } catch (e) {
+    console.log("error ", e);
     res.status(400).end();
   }
 };

@@ -30,7 +30,7 @@ module.exports.addPlace = async (req, res) => {
         dateAdded: date,
       });
       if (doc) {
-        const updatedDoc = await Place.findById(doc._id)
+        const addedDoc = await Place.findById(doc._id)
           .populate([
             { path: "country", select: "name" },
             { path: "category", select: "name" },

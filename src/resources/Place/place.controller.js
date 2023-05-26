@@ -37,7 +37,7 @@ module.exports.addPlace = async (req, res) => {
           ])
           .exec();
         return res.status(200).send({
-          data: addeddDoc,
+          data: addedDoc,
         });
       }
     }

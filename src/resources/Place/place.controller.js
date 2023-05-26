@@ -43,7 +43,6 @@ module.exports.addPlace = async (req, res) => {
     }
     res.status(400).send({ data: "error" });
   } catch (e) {
-    console.log("error ", e);
     res.status(400).end();
   }
 };

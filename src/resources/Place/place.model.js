@@ -5,31 +5,31 @@ const placeShema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  dateAdded: {
-    required: true,
-    type: Date,
-  },
-  description: {
-    required: true,
-    type: String,
-  },
-  phone: {
-    required: true,
-    type: String,
-  },
   country: {
     required: true,
     type: mongoose.SchemaTypes.ObjectId,
     ref: "country",
+  },
+  city: {
+    required: true,
+    type: String,
+  },
+  description: {
+    required: true,
+    type: String,
   },
   category: {
     required: true,
     type: mongoose.SchemaTypes.ObjectId,
     ref: "category",
   },
-  city: {
+  phone: {
     required: true,
     type: String,
+  },
+  dateAdded: {
+    required: true,
+    type: Date,
   },
 });
 

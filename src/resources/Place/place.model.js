@@ -29,7 +29,7 @@ const placeShema = new mongoose.Schema({
   },
   dateAdded: {
     required: true,
-    type: Date,
+    type: String,
   },
 });
 

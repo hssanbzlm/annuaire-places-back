@@ -1,4 +1,5 @@
 const Place = require("./place.model");
+const moment = require("moment");
 const { findCountryId, findCategoryId } = require("../../utils/helpers");
 module.exports.placesList = async (req, res) => {
   try {
@@ -21,7 +22,7 @@ module.exports.addPlace = async (req, res) => {
   try {
     const countryId = await findCountryId(req.body.country);
     const categoryId = await findCategoryId(req.body.category);
-    const date = new Date();
+    const date = moment(new Date()).format("DD/MM/yyyy");
     if (countryId && categoryId) {
       const doc = await Place.create({
         ...req.body,

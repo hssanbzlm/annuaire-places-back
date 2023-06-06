@@ -1,4 +1,4 @@
-const { envConfig } = require("../config/dev");
+const { envConfig } = require("../config");
 const jwt = require("jsonwebtoken");
 const User = require("../resources/User/user.model");
 module.exports.newToken = (user) => {

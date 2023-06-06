@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
-const { envConfig } = require("../config/dev");
+const { envConfig } = require("../config");
 
 module.exports.connect = () => {
-  return mongoose.connect(envConfig.dbUrl, {
-    autoIndex: true,
-  });
+  return mongoose.connect(
+    envConfig.dbUrl,
+    { dbName: envConfig.dbName },
+    {
+      autoIndex: true,
+    }
+  );
 };

@@ -21,6 +21,9 @@ module.exports.protect = (req, res, next) => {
         User.findById(payload.id)
           .then((user) => {
             if (user) next();
+            else {
+              res.status(404).send({ message: "no auth" });
+            }
           })
           .catch((err) => res.status(404).send({ message: err }));
       })
